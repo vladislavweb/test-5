@@ -19,7 +19,8 @@
     "paths": {
       "types/*": ["types/*"],
       "services/*": ["services/*"],
-      "providers/*": ["providers/*"]
+      "providers/*": ["providers/*"],
+      "hooks/*": ["hooks/*"]
     }
   },
   "include": ["src"]
