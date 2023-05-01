@@ -18,7 +18,8 @@
     "baseUrl": "src",
     "paths": {
       "types/*": ["types/*"],
-      "services/*": ["services/*"]
+      "services/*": ["services/*"],
+      "providers/*": ["providers/*"]
     }
   },
   "include": ["src"]
