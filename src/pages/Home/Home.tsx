@@ -10,7 +10,7 @@ interface Props {
 
 const Home: FC<Props> = ({ stories }) => {
   return (
-    <Grid className="home" container gap={2}>
+    <Grid container gap={2}>
       {stories.map((story) => (
         <NewsCard key={story.id} story={story} />
       ))}
