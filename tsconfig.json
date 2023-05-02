@@ -20,7 +20,8 @@
       "types/*": ["types/*"],
       "services/*": ["services/*"],
       "providers/*": ["providers/*"],
-      "hooks/*": ["hooks/*"]
+      "hooks/*": ["hooks/*"],
+      "components/*": ["components/*"]
     }
   },
   "include": ["src"]
