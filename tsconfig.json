@@ -21,7 +21,8 @@
       "services/*": ["services/*"],
       "providers/*": ["providers/*"],
       "hooks/*": ["hooks/*"],
-      "components/*": ["components/*"]
+      "components/*": ["components/*"],
+      "pages/*": ["pages/*"]
     }
   },
   "include": ["src"]
