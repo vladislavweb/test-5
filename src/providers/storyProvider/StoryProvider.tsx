@@ -27,9 +27,9 @@ export const StoryProvider: Props = ({ children }) => {
       idsOfNewStories.push(...res.data.slice(0, 100));
     });
 
-    await StoryService.getStories(idsOfNewStories).then((res) => {
-      if (res) {
-        setStories(res.map((story) => story.data));
+    await StoryService.getStories(idsOfNewStories).then((data) => {
+      if (data) {
+        setStories(data);
       }
     });
   };
