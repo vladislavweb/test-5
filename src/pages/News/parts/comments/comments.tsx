@@ -2,11 +2,12 @@ import { FC, useEffect, useState } from "react";
 import { Button, Grid, Link, Paper, Tooltip, Typography } from "@mui/material";
 import ScheduleIcon from "@mui/icons-material/Schedule";
 import moment from "moment";
+import htmlParser from "html-react-parser";
 
 import { CommentService } from "services";
 import { Comment } from "types";
 
-import config from "../../application.json";
+import { getUserLink } from "utils";
 
 interface Props {
   IdsOfComments: number[];
@@ -26,6 +27,25 @@ const Comments: FC<Props> = ({ IdsOfComments, deep = 0, shownBranches, showBranc
     });
   }, []);
 
+  const showMore = (comment: Comment) => {
+    return (
+      <>
+        {comment.kids?.length && !shownBranches.includes(comment.id) && (
+          <Grid item>
+            <Button
+              onClick={() => {
+                showBranche(comment.id);
+              }}
+              variant="outlined"
+            >
+              {comment.kids.length} more
+            </Button>
+          </Grid>
+        )}
+      </>
+    );
+  };
+
   return (
     <Grid container rowGap={1}>
       {comments.map((comment) => {
@@ -34,11 +54,7 @@ const Comments: FC<Props> = ({ IdsOfComments, deep = 0, shownBranches, showBranc
             <Paper elevation={3} sx={{ width: "100%", margin: 1, padding: 1 }}>
               <Grid container display="flex" alignItems="center">
                 <Grid item>
-                  <Link
-                    href={`${config.USERS_URL}?id=${comment.by}`}
-                    rel="noopener noreferrer"
-                    target="_blank"
-                  >
+                  <Link href={getUserLink(comment.by)} rel="noopener noreferrer" target="_blank">
                     <Typography variant="h6" sx={{ marginRight: 1 }}>
                       {comment.by}
                     </Typography>
@@ -54,24 +70,13 @@ const Comments: FC<Props> = ({ IdsOfComments, deep = 0, shownBranches, showBranc
                     <Typography variant="h6">{moment.unix(comment.time).fromNow()}</Typography>
                   </Grid>
                 </Grid>
-
-                {comment.kids?.length && !shownBranches.includes(comment.id) && (
-                  <Grid item>
-                    <Button
-                      onClick={() => {
-                        showBranche(comment.id);
-                      }}
-                      variant="outlined"
-                    >
-                      Show tree
-                    </Button>
-                  </Grid>
-                )}
               </Grid>
 
-              <Grid container>
-                <Typography variant="body1">{comment.text}</Typography>
+              <Grid container sx={{ lineBreak: "anywhere" }}>
+                <Typography variant="body1">{htmlParser(comment.text || "")}</Typography>
               </Grid>
+
+              {showMore(comment)}
 
               {comment?.kids?.length && shownBranches.includes(comment.id) && (
                 <Comments

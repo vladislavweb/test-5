@@ -1,0 +1,1 @@
+export { getUserLink } from "./getUserLink";

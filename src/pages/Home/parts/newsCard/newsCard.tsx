@@ -7,6 +7,7 @@ import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import moment from "moment";
 
 import { Story } from "types";
+import { getUserLink } from "utils";
 
 interface Props {
   story: Story;
@@ -60,7 +61,12 @@ const NewsCard: FC<Props> = ({ story }) => {
               </Tooltip>
 
               <Typography variant="h6">
-                <Link href={""} rel="noopener noreferrer" underline="none">
+                <Link
+                  href={getUserLink(by)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  underline="none"
+                >
                   {by}
                 </Link>
               </Typography>

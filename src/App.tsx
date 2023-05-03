@@ -2,7 +2,6 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { Container } from "@mui/material";
 
 import { Home, News } from "pages";
-import { StoryProvider } from "providers";
 import { StoryService } from "./services";
 
 const router = createBrowserRouter([
@@ -28,9 +27,7 @@ const router = createBrowserRouter([
 const App = () => {
   return (
     <Container sx={{ marginTop: 3, marginBottom: 3 }}>
-      <StoryProvider>
-        <RouterProvider router={router} />
-      </StoryProvider>
+      <RouterProvider router={router} />
     </Container>
   );
 };

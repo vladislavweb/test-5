@@ -5,7 +5,7 @@ import ScheduleIcon from "@mui/icons-material/Schedule";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import moment from "moment";
 
-import { Comments } from "components";
+import { Comments } from "./parts";
 import { Story } from "types";
 
 import config from "../../application.json";

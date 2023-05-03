@@ -2,7 +2,7 @@ import { FC } from "react";
 import { Grid } from "@mui/material";
 
 import { Story } from "types";
-import { NewsCard } from "components";
+import { NewsCard } from "./parts";
 
 interface Props {
   stories: Story[];
