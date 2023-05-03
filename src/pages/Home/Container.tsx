@@ -1,6 +1,9 @@
 import { FC, useEffect, useState } from "react";
+import { Grid } from "@mui/material";
+import CircularProgress from "@mui/material/CircularProgress";
 
 import { StoryService } from "services";
+import { useShortPolling } from "hooks";
 import { Story } from "types";
 
 import Home from "./Home";
@@ -26,7 +29,15 @@ const Container: FC = () => {
     getStories();
   }, []);
 
-  // useShortPolling(getStories, 2000);
+  useShortPolling(getStories, 1000);
+
+  if (!stories.length) {
+    return (
+      <Grid container justifyContent="center">
+        <CircularProgress />
+      </Grid>
+    );
+  }
 
   return <Home stories={stories} />;
 };

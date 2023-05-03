@@ -1,57 +1,76 @@
-import { FC, useEffect, useState } from "react";
+import { FC } from "react";
 import { Button, Grid, Link, Paper, Tooltip, Typography } from "@mui/material";
 import ScheduleIcon from "@mui/icons-material/Schedule";
 import moment from "moment";
 import htmlParser from "html-react-parser";
+import CircularProgress from "@mui/material/CircularProgress";
 
-import { CommentService } from "services";
 import { Comment } from "types";
-
 import { getUserLink } from "utils";
 
-interface Props {
-  IdsOfComments: number[];
-  deep?: number;
-  shownBranches: number[];
-  showBranche: (id: number) => void;
+import type { Props as ContainerProps } from "./container";
+import CommentsContainer from "./container";
+
+interface Props extends Omit<ContainerProps, "idsOfComments"> {
+  comments: Comment[];
+  isLoading?: boolean;
+  updateComments: () => Promise<void>;
 }
 
-const Comments: FC<Props> = ({ IdsOfComments, deep = 0, shownBranches, showBranche }) => {
-  const [comments, setComments] = useState<Comment[]>([]);
+const Comments: FC<Props> = ({
+  comments,
+  deep = 0,
+  shownBranches,
+  showBranche,
+  isLoading = false,
+  updateComments,
+}) => {
+  const commentUpdateFragment = (comment: Comment) => {
+    if (!shownBranches.includes(comment.id) || deep === 0) {
+      return null;
+    }
 
-  useEffect(() => {
-    CommentService.getComments(IdsOfComments).then((data) => {
-      if (data) {
-        setComments(data);
-      }
-    });
-  }, []);
-
-  const showMore = (comment: Comment) => {
     return (
-      <>
-        {comment.kids?.length && !shownBranches.includes(comment.id) && (
-          <Grid item>
-            <Button
-              onClick={() => {
-                showBranche(comment.id);
-              }}
-              variant="outlined"
-            >
-              {comment.kids.length} more
-            </Button>
-          </Grid>
-        )}
-      </>
+      <Grid item>
+        <Button onClick={updateComments} variant="outlined" sx={{ marginTop: 1 }}>
+          Update comments
+        </Button>
+      </Grid>
     );
   };
+
+  const showMoreFragment = (comment: Comment) => {
+    const handleShowBranche = () => {
+      showBranche(comment.id);
+    };
+
+    if (shownBranches.includes(comment.id) || !comment.kids || !comment.kids.length) {
+      return null;
+    }
+
+    return (
+      <Grid item>
+        <Button onClick={handleShowBranche} variant="outlined" sx={{ marginTop: 1 }}>
+          {`${comment.kids.length} more`}
+        </Button>
+      </Grid>
+    );
+  };
+
+  if (isLoading) {
+    return (
+      <Grid container justifyContent="center">
+        <CircularProgress />
+      </Grid>
+    );
+  }
 
   return (
     <Grid container rowGap={1}>
       {comments.map((comment) => {
         return (
-          <Grid container key={comment.id} sx={{ marginLeft: deep }}>
-            <Paper elevation={3} sx={{ width: "100%", margin: 1, padding: 1 }}>
+          <Grid container key={comment.id} sx={{ marginLeft: deep, marginTop: deep ? 2 : 0 }}>
+            <Paper elevation={3} sx={{ width: "100%", padding: 1 }}>
               <Grid container display="flex" alignItems="center">
                 <Grid item>
                   <Link href={getUserLink(comment.by)} rel="noopener noreferrer" target="_blank">
@@ -61,7 +80,7 @@ const Comments: FC<Props> = ({ IdsOfComments, deep = 0, shownBranches, showBranc
                   </Link>
                 </Grid>
 
-                <Grid display="flex" alignItems="center" sx={{ marginRight: 1 }}>
+                <Grid item display="flex" alignItems="center" sx={{ marginRight: 1 }}>
                   <Tooltip title="Publication date">
                     <ScheduleIcon sx={{ marginRight: 1 }} />
                   </Tooltip>
@@ -76,12 +95,14 @@ const Comments: FC<Props> = ({ IdsOfComments, deep = 0, shownBranches, showBranc
                 <Typography variant="body1">{htmlParser(comment.text || "")}</Typography>
               </Grid>
 
-              {showMore(comment)}
+              {showMoreFragment(comment)}
+
+              {commentUpdateFragment(comment)}
 
               {comment?.kids?.length && shownBranches.includes(comment.id) && (
-                <Comments
-                  IdsOfComments={comment.kids}
+                <CommentsContainer
                   deep={deep + 1}
+                  idsOfComments={comment.kids}
                   shownBranches={shownBranches}
                   showBranche={showBranche}
                 />

@@ -20,7 +20,7 @@ const News: FC<Props> = ({ story, shownBranches, showBranche }) => {
   const { time, descendants, by, kids } = story;
 
   return (
-    <Grid container>
+    <Grid container sx={{ rowGap: 1 }}>
       <Grid container>
         <Grid item xs={12}>
           <Link href={story.url} target="_blank" rel="noopener noreferrer">
@@ -62,7 +62,7 @@ const News: FC<Props> = ({ story, shownBranches, showBranche }) => {
       </Grid>
 
       <Grid container>
-        <Comments IdsOfComments={kids} shownBranches={shownBranches} showBranche={showBranche} />
+        <Comments idsOfComments={kids} shownBranches={shownBranches} showBranche={showBranche} />
       </Grid>
     </Grid>
   );
