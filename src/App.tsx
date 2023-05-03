@@ -10,9 +10,7 @@ const router = createBrowserRouter([
     element: <News />,
     loader: async ({ params }) => {
       try {
-        const response = await StoryService.getStory(params.newsId as any);
-
-        return response.data;
+        return await StoryService.getStory(params.newsId as any);
       } catch (error) {
         return undefined;
       }

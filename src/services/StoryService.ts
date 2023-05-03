@@ -13,19 +13,19 @@ class StoryService {
     });
   }
   async getStory(id: number) {
-    return await Axios.get<Story>(`${config.HACKER_NEWS_URL}/item/${id}.json`, {
+    const story = await Axios.get<Story>(`${config.HACKER_NEWS_URL}/item/${id}.json`, {
       headers: {
         "Content-Type": "application/json",
       },
     });
+
+    return story.data;
   }
   async getStories(ids: number[]) {
     try {
       const requests = ids.map((id) => this.getStory(id));
 
-      const stories = await Axios.all(requests);
-
-      return stories.map((response) => response.data);
+      return await Axios.all(requests);
     } catch {
       return undefined;
     }
