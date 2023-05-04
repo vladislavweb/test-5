@@ -6,19 +6,19 @@ import config from "../application.json";
 
 class CommentService {
   async getComment(id: number) {
-    return await Axios.get<Comment>(`${config.HACKER_NEWS_URL}/item/${id}.json`, {
+    const comment = await Axios.get<Comment>(`${config.HACKER_NEWS_URL}/item/${id}.json`, {
       headers: {
         "Content-Type": "application/json",
       },
     });
+
+    return comment.data;
   }
   async getComments(ids: number[]) {
     try {
       const requests = ids.map((id) => this.getComment(id));
 
-      const comments = await Axios.all(requests);
-
-      return comments.map((response) => response.data);
+      return await Axios.all(requests);
     } catch {
       return undefined;
     }
