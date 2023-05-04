@@ -31,13 +31,25 @@ const News: FC<Props> = ({ story, shownBranches, showBranche }) => {
       </Grid>
 
       <Grid container>
-        <Grid item display="flex" alignItems="center" xs="auto" sx={{ marginRight: 2 }}>
+        <Grid
+          item
+          display="flex"
+          alignItems="center"
+          xs="auto"
+          sx={{ marginRight: 2 }}
+        >
           <Link href="/">
             <ArrowBack />
           </Link>
         </Grid>
 
-        <Grid item display="flex" alignItems="center" xs="auto" sx={{ marginRight: 2 }}>
+        <Grid
+          item
+          display="flex"
+          alignItems="center"
+          xs="auto"
+          sx={{ marginRight: 2 }}
+        >
           <ScheduleIcon sx={{ marginRight: 1 }} />
 
           <Grid>
@@ -45,7 +57,13 @@ const News: FC<Props> = ({ story, shownBranches, showBranche }) => {
           </Grid>
         </Grid>
 
-        <Grid item display="flex" alignItems="center" xs="auto" sx={{ marginRight: 2 }}>
+        <Grid
+          item
+          display="flex"
+          alignItems="center"
+          xs="auto"
+          sx={{ marginRight: 2 }}
+        >
           <CommentIcon sx={{ marginRight: 1 }} />
 
           <Typography variant="h6">{descendants}</Typography>
@@ -55,7 +73,11 @@ const News: FC<Props> = ({ story, shownBranches, showBranche }) => {
           <AccountBoxIcon sx={{ marginRight: 1 }} />
 
           <Typography variant="h6">
-            <Link href={`${config.USERS_URL}?id=${by}`} rel="noopener noreferrer" target="_blank">
+            <Link
+              href={`${config.USERS_URL}?id=${by}`}
+              rel="noopener noreferrer"
+              target="_blank"
+            >
               {by}
             </Link>
           </Typography>

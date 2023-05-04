@@ -13,11 +13,14 @@ class StoryService {
     });
   }
   async getStory(id: number) {
-    const story = await Axios.get<Story>(`${config.HACKER_NEWS_URL}/item/${id}.json`, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const story = await Axios.get<Story>(
+      `${config.HACKER_NEWS_URL}/item/${id}.json`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
     return story.data;
   }

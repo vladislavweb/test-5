@@ -1,6 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 
-export const useShortPolling = <T extends () => any>(callback: T, delay: number) => {
+export const useShortPolling = <T extends () => any>(
+  callback: T,
+  delay: number
+) => {
   const savedCallback = useRef<T>(callback);
   const [amountOfCalls, setAmountOfCalls] = useState(0);
   const [result, setResult] = useState<null | ReturnType<T>>(null);

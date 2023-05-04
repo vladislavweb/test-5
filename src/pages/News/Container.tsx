@@ -13,7 +13,13 @@ const Container: FC = () => {
     setShownBranches([...shownBranches, id]);
   };
 
-  return <News story={story} shownBranches={shownBranches} showBranche={showBranche} />;
+  return (
+    <News
+      story={story}
+      shownBranches={shownBranches}
+      showBranche={showBranche}
+    />
+  );
 };
 
 export default Container;

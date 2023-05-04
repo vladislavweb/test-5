@@ -12,7 +12,12 @@ export interface Props {
   showBranche: (id: number) => void;
 }
 
-const Container: FC<Props> = ({ deep = 0, idsOfComments, shownBranches, showBranche }) => {
+const Container: FC<Props> = ({
+  deep = 0,
+  idsOfComments,
+  shownBranches,
+  showBranche,
+}) => {
   const [comments, setComments] = useState<Comment[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
