@@ -85,7 +85,7 @@ const News: FC<Props> = ({ story, shownBranches, showBranche }) => {
       </Grid>
 
       <Grid container sx={{ rowGap: 2 }}>
-        {kids.map((kid) => (
+        {kids?.map((kid) => (
           <Comments
             key={kid}
             idsOfComments={[kid]}
