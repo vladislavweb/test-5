@@ -1,4 +1,4 @@
-import Axios from "axios";
+import axios from "axios";
 
 import { Story } from "types";
 
@@ -6,29 +6,40 @@ import config from "../application.json";
 
 class StoryService {
   async getIDsOfNewStories() {
-    return Axios.get<number[]>(`${config.HACKER_NEWS_URL}/newstories.json`, {
+    return axios.get<number[]>(`${config.HACKER_NEWS_URL}/newstories.json`, {
       headers: {
         "Content-Type": "application/json",
       },
     });
   }
   async getStory(id: number) {
-    const story = await Axios.get<Story>(
-      `${config.HACKER_NEWS_URL}/item/${id}.json`,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const response = await axios.get<Story | null>(`${config.HACKER_NEWS_URL}/item/${id}.json`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
-    return story.data;
+    if (!response.data) {
+      return undefined;
+    }
+
+    return response.data;
   }
   async getStories(ids: number[]) {
     try {
       const requests = ids.map((id) => this.getStory(id));
+      const responses = await axios.all(requests);
+      const stories: Story[] = [];
 
-      return await Axios.all(requests);
+      for (let i = 0; i < responses.length; i++) {
+        const value = responses[i];
+
+        if (value !== undefined) {
+          stories.push(value);
+        }
+      }
+
+      return stories;
     } catch {
       return undefined;
     }

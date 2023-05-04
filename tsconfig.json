@@ -19,7 +19,6 @@
     "paths": {
       "types/*": ["types/*"],
       "services/*": ["services/*"],
-      "hooks/*": ["hooks/*"],
       "pages/*": ["pages/*"],
       "utils/*": ["utils/*"]
     }

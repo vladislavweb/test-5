@@ -21,11 +21,7 @@ const NewsCard: FC<Props> = ({ story }) => {
       <Paper elevation={3} sx={{ width: "100%", padding: 1 }}>
         <Grid container rowGap={1}>
           <Grid container>
-            <Link
-              href={`/news/${id}`}
-              rel="noopener noreferrer"
-              underline="none"
-            >
+            <Link href={`/news/${id}`} rel="noopener noreferrer" underline="none">
               <Typography variant="h5" component="h6">
                 {title}
               </Typography>
@@ -38,7 +34,7 @@ const NewsCard: FC<Props> = ({ story }) => {
 
               <Grid>
                 <Typography variant="h6">
-                  {moment.unix(time).fromNow()}
+                  {moment.unix(time).format("MMMM Do YYYY, hh:mm")}
                 </Typography>
               </Grid>
             </Grid>

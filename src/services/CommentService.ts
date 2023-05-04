@@ -1,4 +1,4 @@
-import Axios from "axios";
+import axios from "axios";
 
 import { Comment } from "types";
 
@@ -6,14 +6,11 @@ import config from "../application.json";
 
 class CommentService {
   async getComment(id: number) {
-    const comment = await Axios.get<Comment>(
-      `${config.HACKER_NEWS_URL}/item/${id}.json`,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const comment = await axios.get<Comment>(`${config.HACKER_NEWS_URL}/item/${id}.json`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
     return comment.data;
   }
@@ -21,7 +18,7 @@ class CommentService {
     try {
       const requests = ids.map((id) => this.getComment(id));
 
-      return await Axios.all(requests);
+      return await axios.all(requests);
     } catch {
       return undefined;
     }
