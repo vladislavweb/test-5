@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Typography, Tooltip, Grid, Paper, Link } from "@mui/material";
+import { Typography, Grid, Paper, Link } from "@mui/material";
 import CommentIcon from "@mui/icons-material/Comment";
 import StarsIcon from "@mui/icons-material/Stars";
 import ScheduleIcon from "@mui/icons-material/Schedule";
@@ -7,6 +7,7 @@ import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import moment from "moment";
 
 import { Story } from "types";
+import { getUserLink } from "utils";
 
 interface Props {
   story: Story;
@@ -20,7 +21,11 @@ const NewsCard: FC<Props> = ({ story }) => {
       <Paper elevation={3} sx={{ width: "100%", padding: 1 }}>
         <Grid container rowGap={1}>
           <Grid container>
-            <Link href={`/news/${id}`} rel="noopener noreferrer" underline="none">
+            <Link
+              href={`/news/${id}`}
+              rel="noopener noreferrer"
+              underline="none"
+            >
               <Typography variant="h5" component="h6">
                 {title}
               </Typography>
@@ -29,38 +34,37 @@ const NewsCard: FC<Props> = ({ story }) => {
 
           <Grid container columnGap={4}>
             <Grid item display="flex" alignItems="center" xs="auto">
-              <Tooltip title="Publication date">
-                <ScheduleIcon sx={{ marginRight: 1 }} />
-              </Tooltip>
+              <ScheduleIcon sx={{ marginRight: 1 }} />
 
               <Grid>
-                <Typography variant="h6">{moment.unix(time).fromNow()}</Typography>
+                <Typography variant="h6">
+                  {moment.unix(time).fromNow()}
+                </Typography>
               </Grid>
             </Grid>
 
             <Grid item display="flex" alignItems="center" xs="auto">
-              <Tooltip title="Amount Of Comments">
-                <CommentIcon sx={{ marginRight: 1 }} />
-              </Tooltip>
+              <CommentIcon sx={{ marginRight: 1 }} />
 
               <Typography variant="h6">{descendants}</Typography>
             </Grid>
 
             <Grid item display="flex" alignItems="center" xs="auto">
-              <Tooltip title="Score">
-                <StarsIcon sx={{ marginRight: 1 }} />
-              </Tooltip>
+              <StarsIcon sx={{ marginRight: 1 }} />
 
               <Typography variant="h6">{score}</Typography>
             </Grid>
 
             <Grid item display="flex" alignItems="center" xs="auto">
-              <Tooltip title="Author">
-                <AccountBoxIcon sx={{ marginRight: 1 }} />
-              </Tooltip>
+              <AccountBoxIcon sx={{ marginRight: 1 }} />
 
               <Typography variant="h6">
-                <Link href={""} rel="noopener noreferrer" underline="none">
+                <Link
+                  href={getUserLink(by)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  underline="none"
+                >
                   {by}
                 </Link>
               </Typography>
