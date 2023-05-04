@@ -1,8 +1,9 @@
 import { FC } from "react";
-import { Grid, Link, Tooltip, Typography } from "@mui/material";
+import { Grid, Link, Typography } from "@mui/material";
 import CommentIcon from "@mui/icons-material/Comment";
 import ScheduleIcon from "@mui/icons-material/Schedule";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
+import ArrowBack from "@mui/icons-material/ArrowBack";
 import moment from "moment";
 
 import { Comments } from "./parts";
@@ -31,9 +32,13 @@ const News: FC<Props> = ({ story, shownBranches, showBranche }) => {
 
       <Grid container>
         <Grid item display="flex" alignItems="center" xs="auto" sx={{ marginRight: 2 }}>
-          <Tooltip title="Publication date">
-            <ScheduleIcon sx={{ marginRight: 1 }} />
-          </Tooltip>
+          <Link href="/">
+            <ArrowBack />
+          </Link>
+        </Grid>
+
+        <Grid item display="flex" alignItems="center" xs="auto" sx={{ marginRight: 2 }}>
+          <ScheduleIcon sx={{ marginRight: 1 }} />
 
           <Grid>
             <Typography variant="h6">{moment.unix(time).fromNow()}</Typography>
@@ -41,17 +46,13 @@ const News: FC<Props> = ({ story, shownBranches, showBranche }) => {
         </Grid>
 
         <Grid item display="flex" alignItems="center" xs="auto" sx={{ marginRight: 2 }}>
-          <Tooltip title="Amount Of Comments">
-            <CommentIcon sx={{ marginRight: 1 }} />
-          </Tooltip>
+          <CommentIcon sx={{ marginRight: 1 }} />
 
           <Typography variant="h6">{descendants}</Typography>
         </Grid>
 
         <Grid item display="flex" alignItems="center" xs="auto">
-          <Tooltip title="Author">
-            <AccountBoxIcon sx={{ marginRight: 1 }} />
-          </Tooltip>
+          <AccountBoxIcon sx={{ marginRight: 1 }} />
 
           <Typography variant="h6">
             <Link href={`${config.USERS_URL}?id=${by}`} rel="noopener noreferrer" target="_blank">
@@ -61,8 +62,15 @@ const News: FC<Props> = ({ story, shownBranches, showBranche }) => {
         </Grid>
       </Grid>
 
-      <Grid container>
-        <Comments idsOfComments={kids} shownBranches={shownBranches} showBranche={showBranche} />
+      <Grid container sx={{ rowGap: 2 }}>
+        {kids.map((kid) => (
+          <Comments
+            key={kid}
+            idsOfComments={[kid]}
+            shownBranches={shownBranches}
+            showBranche={showBranche}
+          />
+        ))}
       </Grid>
     </Grid>
   );

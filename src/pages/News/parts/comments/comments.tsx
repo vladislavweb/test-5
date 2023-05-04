@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Button, Grid, Link, Paper, Tooltip, Typography } from "@mui/material";
+import { Button, Grid, Link, Paper, Typography } from "@mui/material";
 import ScheduleIcon from "@mui/icons-material/Schedule";
 import moment from "moment";
 import htmlParser from "html-react-parser";
@@ -26,7 +26,7 @@ const Comments: FC<Props> = ({
   updateComments,
 }) => {
   const commentUpdateFragment = (comment: Comment) => {
-    if (!shownBranches.includes(comment.id) || deep === 0) {
+    if (!shownBranches.includes(comment.id)) {
       return null;
     }
 
@@ -81,9 +81,7 @@ const Comments: FC<Props> = ({
                 </Grid>
 
                 <Grid item display="flex" alignItems="center" sx={{ marginRight: 1 }}>
-                  <Tooltip title="Publication date">
-                    <ScheduleIcon sx={{ marginRight: 1 }} />
-                  </Tooltip>
+                  <ScheduleIcon sx={{ marginRight: 1 }} />
 
                   <Grid>
                     <Typography variant="h6">{moment.unix(comment.time).fromNow()}</Typography>
