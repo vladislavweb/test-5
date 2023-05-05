@@ -2,19 +2,11 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { Container } from "@mui/material";
 
 import { Home, News } from "pages";
-import { StoryService } from "./services";
 
 const router = createBrowserRouter([
   {
     path: "/news/:newsId",
     element: <News />,
-    loader: async ({ params }) => {
-      try {
-        return await StoryService.getStory(params.newsId as any);
-      } catch (error) {
-        return undefined;
-      }
-    },
   },
   {
     path: "/",
