@@ -16,7 +16,7 @@ const router = createBrowserRouter([
 
 const App = () => {
   return (
-    <Container sx={{ marginTop: 3, marginBottom: 3 }}>
+    <Container sx={{ height: "100vh", paddingTop: 3, paddingBottom: 3 }}>
       <RouterProvider router={router} />
     </Container>
   );

@@ -6,11 +6,16 @@ import config from "../application.json";
 
 class StoryService {
   async getIDsOfNewStories() {
-    return axios.get<number[]>(`${config.HACKER_NEWS_URL}/newstories.json`, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const reponse = await axios.get<number[]>(
+      `${config.HACKER_NEWS_URL}/newstories.json`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    return reponse.data;
   }
   async getStory(id: number) {
     const response = await axios.get<Story | null>(

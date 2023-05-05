@@ -17,7 +17,7 @@ const NewsCard: FC<Props> = ({ story }) => {
   const { id, title, time, by, score, descendants } = story;
 
   return (
-    <Grid container>
+    <Grid container sx={{ padding: 1 }}>
       <Paper elevation={3} sx={{ width: "100%", padding: 1 }}>
         <Grid container rowGap={1}>
           <Grid container>
