@@ -6,35 +6,39 @@ import { Story } from "types";
 import type { RootState } from "../store";
 
 interface StoryState {
+  idsOfNewStories: number[];
   stories: Story[];
   loading: boolean;
   error: string | null;
 }
 
 const initialState: StoryState = {
+  idsOfNewStories: [],
   stories: [],
   loading: false,
   error: null,
 };
 
-export const getStories = createAsyncThunk<
-  Story[],
+export const getIDsOfNewStories = createAsyncThunk<
+  number[],
   undefined,
   { rejectValue: string }
->("stories/getStories", async (_, { rejectWithValue }) => {
-  const idsOfNewStories: number[] = [];
+>("stories/getIDsOfNewStories", async (_, { rejectWithValue }) => {
+  const idsOfNewStories = await StoryService.getIDsOfNewStories();
 
-  await StoryService.getIDsOfNewStories()
-    .then((res) => {
-      idsOfNewStories.push(...res.data.slice(0, 100));
-    })
-    .catch((error) => {
-      rejectWithValue(error);
-    });
+  return idsOfNewStories;
+});
 
-  const data = await StoryService.getStories(idsOfNewStories);
+export const getStories = createAsyncThunk<
+  Story[],
+  number[],
+  { state: RootState }
+>("stories/getStories", async (ids, { getState }) => {
+  const currentState = getState();
 
-  return data;
+  const data = await StoryService.getStories(ids);
+
+  return [...currentState.story.stories, ...data];
 });
 
 export const getNewStories = createAsyncThunk<
@@ -44,7 +48,7 @@ export const getNewStories = createAsyncThunk<
 >("stories/getNewStories", async (_, { getState }) => {
   const currentState = getState();
 
-  const idsOfNewStories = (await StoryService.getIDsOfNewStories()).data.slice(
+  const idsOfNewStories = (await StoryService.getIDsOfNewStories()).slice(
     0,
     100
   );
@@ -109,6 +113,7 @@ export const storySlice = createSlice({
     });
     builder.addCase(getStories.fulfilled, (state, action) => {
       state.loading = false;
+
       state.stories = action.payload;
     });
     builder.addCase(getNewStories.pending, (state) => {
@@ -128,6 +133,12 @@ export const storySlice = createSlice({
       if (action.payload.length) {
         state.stories = action.payload;
       }
+    });
+    builder.addCase(getIDsOfNewStories.pending, (state) => {
+      state.error = null;
+    });
+    builder.addCase(getIDsOfNewStories.fulfilled, (state, action) => {
+      state.idsOfNewStories = action.payload;
     });
   },
 });
