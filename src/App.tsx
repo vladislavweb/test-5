@@ -1,23 +1,21 @@
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Provider } from "react-redux";
 import { Container } from "@mui/material";
 
 import { Home, News } from "pages";
-
-const router = createBrowserRouter([
-  {
-    path: "/news/:newsId",
-    element: <News />,
-  },
-  {
-    path: "/",
-    element: <Home />,
-  },
-]);
+import { store } from "app/store";
 
 const App = () => {
   return (
     <Container sx={{ height: "100vh", paddingTop: 3, paddingBottom: 3 }}>
-      <RouterProvider router={router} />
+      <Provider store={store}>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/news/:newsId" element={<News />} />
+          </Routes>
+        </BrowserRouter>
+      </Provider>
     </Container>
   );
 };

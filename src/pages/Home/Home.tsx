@@ -37,11 +37,13 @@ const Home: FC = () => {
   };
 
   useEffect(() => {
-    dispatch(getIDsOfNewStories()).then((data) => {
-      if (Array.isArray(data.payload) && data.payload.length) {
-        dispatch(getStories(data.payload.slice(0, 20)));
-      }
-    });
+    if (!stories.length) {
+      dispatch(getIDsOfNewStories()).then((data) => {
+        if (Array.isArray(data.payload) && data.payload.length) {
+          dispatch(getStories(data.payload.slice(0, 10)));
+        }
+      });
+    }
   }, []);
 
   useEffect(() => {

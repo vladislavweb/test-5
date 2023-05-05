@@ -1,5 +1,6 @@
 import { FC } from "react";
-import { Typography, Grid, Paper, Link } from "@mui/material";
+import { Link } from "react-router-dom";
+import { Typography, Grid, Paper } from "@mui/material";
 import CommentIcon from "@mui/icons-material/Comment";
 import StarsIcon from "@mui/icons-material/Stars";
 import ScheduleIcon from "@mui/icons-material/Schedule";
@@ -21,11 +22,7 @@ const NewsCard: FC<Props> = ({ story }) => {
       <Paper elevation={3} sx={{ width: "100%", padding: 1 }}>
         <Grid container rowGap={1}>
           <Grid container>
-            <Link
-              href={`/news/${id}`}
-              rel="noopener noreferrer"
-              underline="none"
-            >
+            <Link to={`/news/${id}`}>
               <Typography variant="h5" component="h6">
                 {title}
               </Typography>
@@ -60,10 +57,9 @@ const NewsCard: FC<Props> = ({ story }) => {
 
               <Typography variant="h6">
                 <Link
-                  href={getUserLink(by)}
+                  to={getUserLink(by)}
                   target="_blank"
                   rel="noopener noreferrer"
-                  underline="none"
                 >
                   {by}
                 </Link>

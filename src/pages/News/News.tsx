@@ -1,4 +1,5 @@
 import { FC } from "react";
+import { Link as RouterLink } from "react-router-dom";
 import { Grid, Link, Typography } from "@mui/material";
 import CommentIcon from "@mui/icons-material/Comment";
 import ScheduleIcon from "@mui/icons-material/Schedule";
@@ -38,9 +39,9 @@ const News: FC<Props> = ({ story, shownBranches, showBranche }) => {
           xs="auto"
           sx={{ marginRight: 2 }}
         >
-          <Link href="/">
+          <RouterLink to="/">
             <ArrowBack />
-          </Link>
+          </RouterLink>
         </Grid>
 
         <Grid
