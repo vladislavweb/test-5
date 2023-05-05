@@ -13,11 +13,14 @@ class StoryService {
     });
   }
   async getStory(id: number) {
-    const response = await axios.get<Story | null>(`${config.HACKER_NEWS_URL}/item/${id}.json`, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const response = await axios.get<Story | null>(
+      `${config.HACKER_NEWS_URL}/item/${id}.json`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
     if (!response.data) {
       return undefined;
@@ -26,23 +29,19 @@ class StoryService {
     return response.data;
   }
   async getStories(ids: number[]) {
-    try {
-      const requests = ids.map((id) => this.getStory(id));
-      const responses = await axios.all(requests);
-      const stories: Story[] = [];
+    const requests = ids.map((id) => this.getStory(id));
+    const responses = await axios.all(requests);
+    const stories: Story[] = [];
 
-      for (let i = 0; i < responses.length; i++) {
-        const value = responses[i];
+    for (let i = 0; i < responses.length; i++) {
+      const value = responses[i];
 
-        if (value !== undefined) {
-          stories.push(value);
-        }
+      if (value !== undefined) {
+        stories.push(value);
       }
-
-      return stories;
-    } catch {
-      return undefined;
     }
+
+    return stories;
   }
 }
 
