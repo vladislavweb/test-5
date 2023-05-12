@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, memo } from "react";
 import { Link } from "react-router-dom";
 import { Typography, Grid, Paper } from "@mui/material";
 import CommentIcon from "@mui/icons-material/Comment";
@@ -72,4 +72,9 @@ const NewsCard: FC<Props> = ({ story }) => {
   );
 };
 
-export default NewsCard;
+export default memo(NewsCard, (prevProps, nextProps) => {
+  return !(
+    prevProps.story.descendants !== nextProps.story.descendants ||
+    prevProps.story.score !== nextProps.story.score
+  );
+});
