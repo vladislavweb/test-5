@@ -22,6 +22,7 @@ const Home: FC = () => {
     (state) => state.story.idsOfNewStories
   );
   const stories = useAppSelector((state) => state.story.stories);
+  const isLoadingStories = useAppSelector((state) => state.story.loading);
   const dispatch = useAppDispatch();
 
   const handleGetStories = () => {
@@ -71,7 +72,11 @@ const Home: FC = () => {
           justifyContent: "center",
         }}
       >
-        <Button variant="contained" onClick={handleUpdateStories}>
+        <Button
+          disabled={isLoadingStories}
+          variant="contained"
+          onClick={handleUpdateStories}
+        >
           Update Stories
         </Button>
       </Grid>

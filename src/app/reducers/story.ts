@@ -9,14 +9,12 @@ interface StoryState {
   idsOfNewStories: number[];
   stories: Story[];
   loading: boolean;
-  error: string | null;
 }
 
 const initialState: StoryState = {
   idsOfNewStories: [],
   stories: [],
   loading: false,
-  error: null,
 };
 
 export const getIDsOfNewStories = createAsyncThunk<
@@ -109,16 +107,13 @@ export const storySlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(getStories.pending, (state) => {
       state.loading = true;
-      state.error = null;
     });
     builder.addCase(getStories.fulfilled, (state, action) => {
       state.loading = false;
-
       state.stories = action.payload;
     });
     builder.addCase(getNewStories.pending, (state) => {
       state.loading = true;
-      state.error = null;
     });
     builder.addCase(getNewStories.fulfilled, (state, action) => {
       state.loading = false;
@@ -126,7 +121,6 @@ export const storySlice = createSlice({
     });
     builder.addCase(updateStories.pending, (state) => {
       state.loading = true;
-      state.error = null;
     });
     builder.addCase(updateStories.fulfilled, (state, action) => {
       state.loading = false;
@@ -134,9 +128,7 @@ export const storySlice = createSlice({
         state.stories = action.payload;
       }
     });
-    builder.addCase(getIDsOfNewStories.pending, (state) => {
-      state.error = null;
-    });
+    builder.addCase(getIDsOfNewStories.pending, () => {});
     builder.addCase(getIDsOfNewStories.fulfilled, (state, action) => {
       state.idsOfNewStories = action.payload;
     });
